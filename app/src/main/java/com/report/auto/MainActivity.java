@@ -257,7 +257,10 @@ public class MainActivity extends AppCompatActivity {
     }
     //view=================================
     public String getBasePath(){
-        return Environment.getExternalStorageDirectory().getAbsolutePath()+"/健康上报";
+        //本应用程序数据路径
+        return getApplicationContext().getFilesDir().getAbsolutePath()+"/健康上报";
+        //外部路径，所有程序可访问
+        //return Environment.getExternalStorageDirectory().getAbsolutePath()+"/健康上报";
     }
     public String getConfigFilePathname(){
         return getBasePath()+"/健康上报配置.txt";

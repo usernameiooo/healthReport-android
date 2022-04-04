@@ -71,6 +71,7 @@ public class ReportService extends Service {
             public void run() {
                 for(User user: configManager.getUsers()){
                     runOnceForUser(user);
+                    notifyRunningState("健康上报 运行中...","下次上报将在"+smf(date));
                 }
             }
         },10);
@@ -87,14 +88,21 @@ public class ReportService extends Service {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                if(shouldNotifyRunning())
                 notifyRunningState("健康上报 运行中...","下次上报将在"+smf(date));
             }
-        },100,5000);
+        },100,10*60*1000);
     }
     private String smf(Date date){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
     }
-
+    /**每天1点到22点之间不再通知运行状态*/
+    private boolean shouldNotifyRunning(){
+        Date date=new Date();
+        int hours = date.getHours();
+        if(hours>=1&&hours<22)return false;
+        return true;
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

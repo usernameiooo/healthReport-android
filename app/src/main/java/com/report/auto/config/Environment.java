@@ -30,10 +30,9 @@ public class Environment {
         }
         return null;
     }
+    /**邮箱或授权码为空表示不通过邮箱发送消息*/
     public static boolean check(Environment e){
         if(e==null)return false;
-        if(e.account==null||e.authCode==null)return false;
-        if(e.account.isEmpty()||e.authCode.isEmpty())return false;
         if(e.time<2)e.time=2;
         if(e.time>59)e.time=59;
         return true;
@@ -69,5 +68,11 @@ public class Environment {
 
     public String getAuthCode() {
         return authCode;
+    }
+    /**是否发送邮件*/
+    public boolean isSendMail(){
+        if(account==null||authCode==null)return false;
+        if(account.isEmpty()||authCode.isEmpty())return false;
+        return true;
     }
 }

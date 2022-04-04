@@ -56,6 +56,7 @@ public class ReportService extends Service {
         System.out.println(result);
         if(result.startsWith(Client.REPORT_FAIL_START))result+="，请手动上报";
         notifyReportResult("为"+user.getAccount()+"上报，",result);
+        if(configManager.getEnvironment().isSendMail()&&user.isNotifyByMail())
         mailSender.sendMailInThread(user.getMail(),result,result);
     }
     private static final long PERIOD_DAY = 24*60*60*1000;

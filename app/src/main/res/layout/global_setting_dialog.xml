@@ -14,7 +14,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="邮箱"
+            android:text="邮箱(为空时不发送邮件通知)"
             android:textSize="16sp"
     />
      <EditText
@@ -26,7 +26,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="邮箱授权码"
+            android:text="邮箱授权码(为空时不发送邮件通知)"
             android:textSize="16sp"
     />
     <EditText

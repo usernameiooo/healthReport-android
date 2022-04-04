@@ -159,9 +159,11 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
     private void setSettingInfoView(com.report.auto.config.Environment env){
+        if(env.isSendMail())
         globalSettingView.setText("发送消息的邮箱："+env.getAccount()+"\n" +
                 "邮箱授权码："+env.getAuthCode()+"\n" +
                 "上报时间：0:"+env.getTime());
+        else globalSettingView.setText("不使用邮箱进行通知\n"+"上报时间：0:"+env.getTime());
     }
     private void dialogForNewUser(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);

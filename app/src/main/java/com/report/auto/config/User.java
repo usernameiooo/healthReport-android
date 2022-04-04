@@ -31,10 +31,11 @@ public class User {
         }catch (Exception e){}
         return null;
     }
+    /**mail为空时不使用邮箱通知*/
     public static boolean check(User user){
         if(user==null)return false;
-        if(user.account==null||user.password==null||user.mail==null)return false;
-        if(user.account.isEmpty()||user.password.isEmpty()||user.mail.isEmpty())return false;
+        if(user.account==null||user.password==null)return false;
+        if(user.account.isEmpty()||user.password.isEmpty())return false;
         return true;
     }
 
@@ -81,5 +82,9 @@ public class User {
 
     public String getMail() {
         return mail;
+    }
+    /**是否用邮箱通知*/
+    public boolean isNotifyByMail(){
+        return mail != null && !mail.isEmpty();
     }
 }

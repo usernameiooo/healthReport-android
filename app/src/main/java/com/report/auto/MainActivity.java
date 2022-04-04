@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
             }
         }
-        String basePath = getBasePath();
+      /*  String basePath = getBasePath();
         File dir=new File(basePath);
-        if(!dir.exists())dir.mkdirs();
+        if(!dir.exists())dir.mkdirs();*/
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -258,26 +258,28 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
     //view=================================
-    public String getBasePath(){
-        //本应用程序数据路径
+    public String getBasePath1(){
+        //本应用程序数据路径,/data/user/0/com.report.auto/files/健康上报/健康上报配置.txt，注意不是在Android/data下
+        //但是卸载应用会删除文件
         return getApplicationContext().getFilesDir().getAbsolutePath()+"/健康上报";
         //外部路径，所有程序可访问
-        //return Environment.getExternalStorageDirectory().getAbsolutePath()+"/健康上报";
+       //return Environment.getExternalStorageDirectory().getAbsolutePath()+"/健康上报";
     }
     public String getConfigFilePathname(){
-        return getBasePath()+"/健康上报配置.txt";
+        return getBasePath1()+"/健康上报配置.txt";
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        configManager=new ConfigManager(getConfigFilePathname());
         setContentView(R.layout.activity_main);
         initView();
         requestPermission();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if(!isIgnoringBatteryOptimizations())requestIgnoreBatteryOptimizations();
         }
-        System.out.println(getBasePath());
         File file=new File(getConfigFilePathname());
+        System.out.println(getConfigFilePathname());
         if(file.exists()){
             System.out.println("读取配置文件");
             configManager.getConfig();
@@ -293,9 +295,10 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("未找到配置文件，需要进行设置");
         }
     }
-    ConfigManager configManager=new ConfigManager(getConfigFilePathname());
+    ConfigManager configManager;
 
     public void serviceStart(){
+        if(configManager==null)configManager=new ConfigManager(getConfigFilePathname());;
         if (!configManager.checkIfCanRun()){
             Toast.makeText(MainActivity.this,"配置不全或错误，不能运行",Toast.LENGTH_SHORT).show();
             return;
